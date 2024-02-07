@@ -66,9 +66,12 @@ class pAuxillarySensors:  # noqa: N801
         """Get relative humidity/temperature from top and bottom section.
 
         Returns a dictionary with temp_top/temp_bottom/rh_top/rh_bottom
-        Values are int for rh, float for temp (rounded to two digits),
-            'NULL' if unable to get value, or the raw received string if there are
-            issues during string processing (likely in the form of 'tt2320th58')
+        Values are int for rh, float for temp (rounded to two digits), or:
+            - 'NULL' if unable to get value
+            - the raw received string (likely in the form of 'tt2320th58')
+                if there are issues during string processing
+            - 'NC' if the multiplexer board could not communicate with the sensor board or
+                the sensor has issues
 
         Returns:
             Dict: dictionary with temperature and humidity for top/bottom
