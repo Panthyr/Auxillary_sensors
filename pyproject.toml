@@ -31,7 +31,7 @@ where = ['src'] # list of folders that contain the packages (['.'] by default)
 # include = ['XXX']
 
 [project.scripts]
-# manage_mro_modem_modes = "XXX.XXX:YYY"
+test_aux = "src.test:test_auxillary"
 
 [tool.bandit]
 exclude_dirs = ["tests"]

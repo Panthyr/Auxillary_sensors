@@ -81,7 +81,7 @@ class pAuxillarySensors:  # noqa: N801
         }
         try:
             env = self._get_environmentals()
-            rtn += env
+            rtn.update(env)
         except Exception:
             log.exception()
         return rtn
@@ -102,11 +102,11 @@ class pAuxillarySensors:  # noqa: N801
         raw = [
             line
             for line in self._query_environmentals()
-            if line.startswith('tt') or line.startswith('bt')
+            if line.startswith('tt') or line.startswith('tb')
         ]
         for line in raw:
             temp, rh = self._split_environmentals_str(line)
-            if line.startswith('bt'):
+            if line.startswith('tb'):
                 rtn['temp_bottom'], rtn['rh_bottom'] = temp, rh
             if line.startswith('tt'):
                 rtn['temp_top'], rtn['rh_top'] = temp, rh
@@ -121,14 +121,17 @@ class pAuxillarySensors:  # noqa: N801
         Returns:
             List[float, int]: [temperature (float, rounded to two digits), relative humidity (int)]
         """
-        try:
-            temp = round((int(line[2:6]) / 100), 2)
-        except Exception:
-            temp = line
-        try:
-            rh = int(line[-2:])
-        except Exception:
-            rh = line
+        if line in ('tt0,ht0', 'tb0,hb0'):
+            temp = rh = 'NC'
+        else:
+            try:
+                temp = round((int(line[2:6]) / 100), 2)
+            except Exception:
+                temp = line
+            try:
+                rh = int(line[-2:])
+            except Exception:
+                rh = line
         return [temp, rh]
 
     def _query_environmentals(self) -> List[str]:
@@ -152,3 +155,9 @@ class pAuxillarySensors:  # noqa: N801
                 data = ''
             rtn.append(data)
         return rtn
+
+
+if __name__ == '__main__':
+    print('Remember to switch on power to the aux board first.')
+    a = pAuxillarySensors()
+    print(a.get_environmentals())
