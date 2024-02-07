@@ -18,7 +18,7 @@ def test_auxillary() -> None:
     print(
         '\t- If a sensor returns "NULL", no data was received. ',
         'Check power and cabling (Rx/Tx swap?)'
-        '\n\t- If a sensor returns"NC" is received, there is communication with the boards, '
+        '\n\t- If a sensor returns "NC", there is communication with the boards, '
         '\n\t\tbut no sensor board is installed or sensor could not be read...',
     )
     print('*' * 80 + '\n\n')
