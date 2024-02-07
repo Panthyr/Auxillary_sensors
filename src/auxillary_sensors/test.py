@@ -13,7 +13,7 @@ from .auxillary import pAuxillarySensors
 def test_auxillary() -> None:
     print('*' * 80)
     print('Testing the auxillary sensors.')
-    print('Remember to switch on power to the aux board first.')
+    print('\nRemember to switch on power to the aux board AND the top section first!')
     print('\nReturns:')
     print(
         '\t- If a sensor returns "NULL", no data was received. ',
