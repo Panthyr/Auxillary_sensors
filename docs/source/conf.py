@@ -20,7 +20,7 @@ project = 'Panthyr Auxillary sensors'
 author = 'Dieter Vansteenwegen'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.0-beta'
+release = 'v0.1.0'
 
 # -- General configuration ---------------------------------------------------
 
