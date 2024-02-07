@@ -1,5 +1,5 @@
 # Changelog auxillary sensors
 
-## Not yet released
+## v0.1.0
 
-- feature 1
+- Initial release
