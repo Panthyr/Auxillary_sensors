@@ -31,7 +31,7 @@ where = ['src'] # list of folders that contain the packages (['.'] by default)
 # include = ['XXX']
 
 [project.scripts]
-test_aux = "src.test:test_auxillary"
+test_aux = "auxillary_sensors.test:test_auxillary"
 
 [tool.bandit]
 exclude_dirs = ["tests"]
