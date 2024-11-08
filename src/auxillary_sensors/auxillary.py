@@ -7,6 +7,7 @@ __email__ = 'dieter.vansteenwegen@vliz.be'
 __project__ = 'Panthyr'
 __project_link__ = 'https://waterhypernet.org/equipment/'
 
+import contextlib
 import logging
 from typing import Dict, List, Union
 
@@ -158,6 +159,56 @@ class pAuxillarySensors:  # noqa: N801
                 data = ''
             rtn.append(data)
         return rtn
+
+    def get_imu(self) -> Dict[str, Union[str, float]]:
+        """Attempts to get pitch/roll/heading data from the top section imu.
+
+        _extended_summary_
+
+        Returns:
+            Dict[str, Union[str, float]]: _description_
+        """        rtn = {
+            'pitch': 'NULL',
+            'roll': 'NULL',
+            'heading': 'NULL',
+        }
+        try:
+            imu = self._get_imu()
+            rtn.update(imu)
+        except Exception:
+            log.exception()
+        return rtn
+
+    def _get_imu(self) -> Dict[str, float]:
+        rtn = {}
+        raw: str = self._query_imu()
+        for line in raw:
+            rtn.update(self._parse_imu_line(line))
+
+    def _parse_imu_line(self, raw:str) -> Dict[str,float]:
+        rtn = {}
+        identifier, data, *_ = raw.split(':')
+
+    def _query_imu(self) -> List[str]:
+        """Query the serial port for imu data.
+
+        - Clear the serial port input buffer.
+        - Query the serial port for the imu data
+        - Reads 3 lines from serial port and add them to the list (without \n, spaces or commas).
+        - return the returned list of strings.
+
+        Expected return from serial port: "p:(-)xxx.yy\n, r:(-)xxx.yy\n, h:xxx"
+
+        Returns:
+            list[str]: expected ['p:-xxx.yy', 'r:-xxx.yy', 'h:xxx']  # - sign might not be present
+        """
+        self._port.read_all()
+        self._port.write('?imu*'.encode())
+        data = []
+        for _ in range(3):
+            with contextlib.suppress(serial.SerialTimeoutException):
+                data.append(self._port.readline().decode().strip('\n ,'))
+        return data
 
 
 if __name__ == '__main__':
