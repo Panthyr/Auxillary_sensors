@@ -167,7 +167,8 @@ class pAuxillarySensors:  # noqa: N801
 
         Returns:
             Dict[str, Union[str, float]]: _description_
-        """        rtn = {
+        """        
+        rtn = {
             'pitch': 'NULL',
             'roll': 'NULL',
             'heading': 'NULL',
