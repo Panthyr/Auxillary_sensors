@@ -3,7 +3,7 @@
 [project]
 name = 'Panthyr_auxillary_sensors'
 readme = 'README.md'
-version = '0.1.0'
+version = 'v0.2.0'
 description = 'Panthyr repository for the auxillary sensors (temperature/humidity/tilt sensors/rain/...)'
 authors = [{ email = 'dieterv@vliz.be', name = 'Dieter Vansteenwegen' }]
 classifiers = [

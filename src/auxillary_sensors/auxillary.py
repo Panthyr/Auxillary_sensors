@@ -129,11 +129,11 @@ class pAuxillarySensors:  # noqa: N801
             temp = rh = 'NC'
         else:
             try:
-                temp_str, rh_str= line.strip(' ').split(',')
-                temp = round(int(temp_str[2:])/100,2)
+                temp_str, rh_str = line.strip(' ').split(',')
+                temp = round(int(temp_str[2:]) / 100, 2)
                 rh = int(rh_str[2:])
-            except ValueError: # couldn't unpack
-                msg = f'Couldn\'t properly unpack {line} to temp and rh.'
+            except ValueError:  # couldn't unpack
+                msg = f"Couldn't properly unpack {line} to temp and rh."
                 log.warning(msg)
                 temp = rh = line
 
@@ -168,7 +168,7 @@ class pAuxillarySensors:  # noqa: N801
 
         Returns:
             Dict[str, Union[str, float]]: _description_
-        """        
+        """
         rtn = {
             'pitch': 'NULL',
             'roll': 'NULL',
@@ -187,9 +187,11 @@ class pAuxillarySensors:  # noqa: N801
         for line in raw:
             rtn.update(self._parse_imu_line(line))
 
-    def _parse_imu_line(self, raw:str) -> Dict[str,float]:
-        rtn = {}
-        identifier, data, *_ = raw.split(':')
+    def _parse_imu_line(self, raw: str) -> Dict[str, float]:
+        # rtn = {}
+        # identifier, data, *_ = raw.split(':')
+        # TODO
+        pass
 
     def _query_imu(self) -> List[str]:
         """Query the serial port for imu data.
