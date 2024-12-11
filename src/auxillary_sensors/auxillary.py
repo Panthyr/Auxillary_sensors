@@ -116,7 +116,7 @@ class pAuxillarySensors:  # noqa: N801
                 rtn['temp_top'], rtn['rh_top'] = temp, rh
         return rtn
 
-    def _split_environmentals_str(self, line: str) -> List[Union[float, int]]:
+    def _split_environmentals_str(self, line: str) -> List[Union[float, int, str]]:
         """Split a line from the multiplexer board into temperature and humidity.
 
         Args:
@@ -129,13 +129,14 @@ class pAuxillarySensors:  # noqa: N801
             temp = rh = 'NC'
         else:
             try:
-                temp = round((int(line[2:6]) / 100), 2)
-            except Exception:
-                temp = line
-            try:
-                rh = int(line[-2:])
-            except Exception:
-                rh = line
+                temp_str, rh_str= line.strip(' ').split(',')
+                temp = round(int(temp_str[2:])/100,2)
+                rh = int(rh_str[2:])
+            except ValueError: # couldn't unpack
+                msg = f'Couldn\'t properly unpack {line} to temp and rh.'
+                log.warning(msg)
+                temp = rh = line
+
         return [temp, rh]
 
     def _query_environmentals(self) -> List[str]:

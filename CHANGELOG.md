@@ -2,8 +2,9 @@
 
 ## Not released yet
 
-- Added `__version__` info in `__init__.py`
+- build: Added `__version__` info in `__init__.py`
 - feat: Add IMU functionality
+- fix: Handle parsing of temps between -10 and 10 degC
 
 ## v0.1.0
 
